@@ -1,13 +1,29 @@
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+name: CI Pipeline
 
-    - name: Install dependencies
-      run: npm install
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
-    - name: Build application
-      run: npm run build
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
 
-    - name: Run static HTML test
-      run: npm test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
+
+      - name: Run static tests (lint)
+        run: npm run lint
