@@ -1,20 +1,13 @@
-name: CI Pipeline
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
+    - name: Install dependencies
+      run: npm install
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
+    - name: Build application
+      run: npm run build
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Build step
-      run: echo "Build step completed"
-
-    - name: Run static test
-      run: echo "Tests passed"
+    - name: Run static HTML test
+      run: npm test
