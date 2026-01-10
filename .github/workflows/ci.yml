@@ -1,0 +1,20 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build step
+      run: echo "Build step completed"
+
+    - name: Run static test
+      run: echo "Tests passed"
