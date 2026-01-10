@@ -1,2 +1,2 @@
-name: Run static tests (lint)
-run: npm run lint || true
+- name: Run static tests (lint)
+  run: npm run lint || true
