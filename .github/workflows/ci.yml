@@ -1,33 +1,41 @@
+#This is the name of my workflow shown in Github 
 name: CI/CD Pipeline
 
+#The workflow runs automatically when code is pushed from the main branch
 on:
   push:
     branches:
       - main
   pull_request:
-
+#Uses the latest code to build and deploy
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
+#1- This is checking the source code from my Github repositary
+#Allowing the code to run and access all the project files
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
+#2- This sets up the node.js environment
+#Ensure consistency between local and integrated environments
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
-
+#3- Installs all of the project dependencies for the package.json file
       - name: Install dependencies
         run: npm install
-
+#5- Builds the application and ensures it is compiled successfully
       - name: Build application
         run: npm run build
-
+        
+#4- Runs the static code analysis
+#ESlint check the code quality and common errors
       - name: Run static tests (lint)
         run: npm run lint || true
+#True allows to code to continue to run even with the warning errors
 
+#6- Deploys to Vercel and uses the environment variables stored in the Github Secrets
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20
         with:
